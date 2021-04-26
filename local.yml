@@ -2,7 +2,6 @@
 - hosts: localhost
   become: yes
   vars:
-    state: present
     validate_certs: 'false'
 
   tasks:
@@ -16,9 +15,11 @@
         display_name: "Avi - NSX-T SE"
         domain_id: "default"
         category: "Application"
+        scope: ["{{ se_group }}"]
         rules:
           - action: "ALLOW"
             display_name: "Allow-SE-TO-SE-ANY"
             source_groups: ["{{ se_group }}"]
             destination_groups: ["{{ se_group }}"]
             services: ["ANY"]
+            scope: ["{{ se_group }}"]
