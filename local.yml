@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  become: yes
+  vars:
+    state: present
+    validate_certs: 'false'
+
+  tasks:
+    - name: Security Policy NSX-T Cloud
+      nsxt_policy_security_policy:
+        hostname: "{{ nsx_server }}"
+        username: "{{ nsx_username }}"
+        password: "{{ nsx_password }}"
+        validate_certs: "{{ validate_certs }}"
+        state: "{{ state }}"
+        display_name: "Avi - NSX-T SE"
+        domain_id: "default"
+        category: "Application"
+        rules:
+          - action: "ALLOW"
+            display_name: "Allow-SE-TO-SE-ANY"
+            source_groups: ["{{ se_group }}"]
+            destination_groups: ["{{ se_group }}"]
+            services: ["ANY"]
