@@ -11,15 +11,26 @@
         username: "{{ nsx_username }}"
         password: "{{ nsx_password }}"
         validate_certs: "{{ validate_certs }}"
-        state: "{{ state }}"
-        display_name: "Avi - NSX-T SE"
-        domain_id: "default"
-        category: "Application"
-        scope: ["{{ se_group }}"]
+        state: "{{ state | default('present') }}"
+        display_name: "{{ policy_name }}"
+        domain_id: "{{ domain_id | default('default') }}"
+        category: "{{ category_name | default('Application') }}"
+        scope: ["{{ policy_scope }}"]
         rules:
           - action: "ALLOW"
-            display_name: "Allow-SE-TO-SE-ANY"
-            source_groups: ["{{ se_group }}"]
-            destination_groups: ["{{ se_group }}"]
+            display_name: "{{ rule_name }}"
+            source_groups: ["{{ source_group }}"]
+            destination_groups: ["{{ destination_group }}"]
             services: ["ANY"]
-            scope: ["{{ se_group }}"]
+            scope: ["{{ rule_scope }}"]
+      when:
+        - nsx_server is defined
+        - nsx_username is defined
+        - nsx_password is defined
+        - validate_certs is defined
+        - policy_name is defined
+        - policy_scope
+        - rule_name
+        - source_group is defined
+        - destination_group is defined
+        - rule_scope is defined
