@@ -29,8 +29,8 @@
         - nsx_password is defined
         - validate_certs is defined
         - policy_name is defined
-        - policy_scope
-        - rule_name
+        - policy_scope is defined
+        - rule_name is defined
         - source_group is defined
         - destination_group is defined
         - rule_scope is defined
