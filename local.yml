@@ -14,15 +14,13 @@
         state: "{{ state | default('present') }}"
         display_name: "{{ policy_name }}"
         domain_id: "{{ domain_id | default('default') }}"
-        category: "{{ category_name | default('Application') }}"
-        scope: ["{{ policy_scope | default(omit) }}"]
+        category: "{{ category_name | default('Infrastructure') }}"
         rules:
           - action: "ALLOW"
             display_name: "{{ rule_name | default(omit) }}"
             source_groups: ["{{ source_group | default(omit) }}"]
             destination_groups: ["{{ destination_group | default(omit) }}"]
             services: ["ANY"]
-            scope: ["{{ rule_scope | default(omit) }}"]
       when:
         - nsx_server is defined
         - nsx_username is defined
